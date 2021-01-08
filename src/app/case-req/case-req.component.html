@@ -1,0 +1,92 @@
+<div class="container">
+  <h1>查詢條件</h1>
+  <form>
+
+    <div class="row">
+      <div class="col-sm-6">列管層級</div>
+      <div class="col-sm-6">類別</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <select (change)="onMonitorLevelChange($event)">
+            <option *ngFor="let monitorLevelEnum of CaseMonitorLevel " [value]="monitorLevelEnum.id">{{ monitorLevelEnum.name }}</option>
+        </select>
+      </div>
+      <div class="col-sm-6">
+        <select (change)="onTypeChange($event)">
+          <option *ngFor="let typeEnum of CaseType " [value]="typeEnum.id">{{ typeEnum.name }}</option>
+        </select>
+      </div>
+    </div>
+    <p>monitorLevel: {{ monitorLevel }}</p>
+    <p>type: {{ type }}</p>
+    <div class="row">
+      <div class="col-sm-6">主管單位</div>
+      <div class="col-sm-6">承辦單位</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <select (change)="onManagerEmpChange($event)">
+          <option value="">請選擇</option>
+          <option *ngFor="let managerEmp of units " [value]="managerEmp.id">{{ managerEmp.name }}</option>
+        </select>
+      </div>
+      <div class="col-sm-6">
+        <select (change)="onContactEmpChange($event)">
+          <option value="">請選擇</option>
+          <option *ngFor="let contactEmp of units " [value]="contactEmp.id">{{ contactEmp.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3 offset-sm-9" style="text-align: right; margin-top: 10px;">
+        <input type="submit" value="新增" [routerLink]="['/create']"	 />
+        <!-- <router-outlet></router-outlet> -->
+<!-- 					<input type="submit" value="查詢" 	onclick="searchForm.action = 'doSearch';" /> -->
+        <input id="search" type="button" value="查詢" (click)="doSearch()" />
+        <input  sec:authorize="hasRole('ADMIN')" type="submit" value="列印" 	onclick="searchForm.action = 'doPrint';" />
+      </div>
+    </div>
+  </form>
+</div>
+
+<div><span style="color: red;">{{ errorMsg }}</span></div>
+<div *ngIf="caseReqList != null">
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th><input id="checkAll" type="checkbox" /></th>
+             <!-- <th>項次</th>  -->
+            <th><a class="sorted">工作編號</a></th>
+            <th><a class="sorted">類別</a></th>
+            <th><a class="sorted">列管層級</a></th>
+            <th><a class="sorted">主管單位</a></th>
+            <th><a class="sorted">主管單位承辦人</a></th>
+            <th><a class="sorted">承辦單位</a></th>
+            <th><a class="sorted">承辦單位承辦人</a></th>
+            <th><a class="sorted">辦理起日</a></th>
+            <th><a class="sorted">辦理訖日</a></th>
+            <th><a class="sorted">工作項目</a></th>
+            <th>功能</th>
+        </tr>
+    </thead>
+     <tbody>
+        <tr *ngFor="let caseReq of caseReqList">
+                <td><input type="checkbox" class="cases" name="delCaseNoList" value="{{caseReq.caseNo}}"/></td>
+                 <!-- <td><p text="${caseReqStatus.count} + ${size}*${page}"/></td>  -->
+                <td ><p>{{ caseReq.caseNo }}</p></td>
+                <td ><p>{{ CaseTypeEnum[caseReq.type] }}</p></td>
+                <td><p>{{ CaseMonitorLevelEnum[caseReq.monitorLevel] }}</p></td>
+                <td><p>{{ caseReq.managerEmp.unit.name }}({{ caseReq.managerEmp.unit.unitId }})</p></td>
+                <td><p>{{ caseReq.managerEmp.unit.name }}-{{ caseReq.managerEmp.name }}({{ caseReq.managerEmp.empId }})</p></td>
+                <td><p>{{ caseReq.contactEmp.unit.name }}({{ caseReq.contactEmp.unit.unitId }})</p></td>
+                <td><p>{{ caseReq.contactEmp.unit.name }}-{{ caseReq.contactEmp.name }}({{caseReq.contactEmp.empId  }})</p></td>
+                <td><p>{{ caseReq.start }}</p></td>
+                <td><p>{{ caseReq.end }}</p></td>
+                <td><p>{{ caseReq.workItemDesc }}</p></td>
+                <td><input type="button" value="修改" class="updateBtn" /></td>
+        </tr>
+    </tbody>
+ </table>
+</div>
+

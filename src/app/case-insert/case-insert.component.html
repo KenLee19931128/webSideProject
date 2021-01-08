@@ -1,0 +1,117 @@
+<div class="container">
+	<h1>新增畫面</h1>
+	<form  id="createForm" [formGroup]="createForm">
+		<div class="row">
+			<div class="col-sm-6">工作編號</div>
+		</div>
+		<div class="row">
+      <div class="col-sm-6"><input type="text"  formControlName="caseNo" /></div>
+        <div *ngIf="form.caseNo.invalid && (form.caseNo.dirty || form.caseNo.touched)">
+          <div *ngIf="form.caseNo.errors?.required">
+            <span style="color: red;">CaseNo is required.</span>
+          </div>
+          <div *ngIf="form.caseNo.errors?.minlength">
+            <span style="color: red;">CaseNo must be at least 10 characters long.</span>
+          </div>
+      </div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">列管層級</div><div class="col-sm-6">類別</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<select  formControlName="monitorLevel" >
+          <option value="" selected="selected">請選擇</option>
+          <option *ngFor="let monitorLevelEnum of CaseMonitorLevel " [value]="monitorLevelEnum.id">{{ monitorLevelEnum.name }}</option>
+        </select>
+          <div *ngIf="form.monitorLevel.invalid && (form.monitorLevel.dirty || form.monitorLevel.touched)">
+            <div *ngIf="form.monitorLevel.errors?.selectedValidator">
+              <span style="color: red;">MonitorLevel is required.</span>
+            </div>
+          </div>
+			</div>
+			<div class="col-sm-6">
+				<select formControlName="type">
+          <option value="">請選擇</option>
+          <option *ngFor="let typeEnum of CaseType " [value]="typeEnum.id">{{ typeEnum.name }}</option>
+        </select>.
+        <div *ngIf="form.type.invalid && (form.type.dirty || form.type.touched)">
+          <div *ngIf="form.type.errors?.selectedValidator">
+            <span style="color: red;">Type is required.</span>
+          </div>
+        </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">主管單位承辦人</div><div class="col-sm-6">承辦單位承辦人</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<select formControlName="managerEmp">
+          <option value="">請選擇</option>
+          <option *ngFor="let managerEmp of employees " [value]="managerEmp.empId">{{ managerEmp.name }}</option>
+        </select>
+        <div *ngIf="form.managerEmp.invalid && (form.managerEmp.dirty || form.managerEmp.touched)">
+          <div *ngIf="form.managerEmp.errors?.selectedValidator">
+            <span style="color: red;">ManagerEmp is required.</span>
+          </div>
+        </div>
+			</div>
+			<div class="col-sm-6">
+				<select formControlName="contactEmp">
+          <option value="">請選擇</option>
+          <option *ngFor="let contactEmp of employees " [value]="contactEmp.empId">{{ contactEmp.name }}</option>
+        </select>
+        <div *ngIf="form.contactEmp.invalid && (form.contactEmp.dirty || form.contactEmp.touched)">
+          <div *ngIf="form.contactEmp.errors?.selectedValidator">
+            <span style="color: red;">ContactEmp is required.</span>
+          </div>
+        </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">辦理起日</div><div class="col-sm-6">辦理訖日</div>
+		</div>
+		<div class="row">
+      <div class="col-sm-6">
+        <input formControlName="start" name="start" id="start" type="date" />
+        <div *ngIf="form.start.invalid && (form.start.dirty || form.start.touched)">
+          <div *ngIf="form.start.errors?.required">
+            <span style="color: red;">Start Time is required.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <input formControlName="end" name="end" id="end" type="date" />
+        <div *ngIf="form.end.invalid && (form.end.dirty || form.end.touched)">
+          <div *ngIf="form.end.errors?.required">
+            <span style="color: red;">End Time is required.</span>
+          </div>
+        </div>
+      </div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">工作項目</div><div class="col-sm-6"></div>
+		</div>
+		<div class="row">
+      <div class="col-sm-6"><textarea formControlName="workItemDesc" name="workItemDesc" id="workItemDesc"></textarea></div>
+      <div *ngIf="form.workItemDesc.invalid && (form.workItemDesc.dirty || form.workItemDesc.touched)">
+        <div *ngIf="form.workItemDesc.errors?.required">
+          <span style="color: red;">WorkItemDesc Time is required.</span>
+        </div>
+      </div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12" style="text-align: right">
+        <!-- <input id="createInsert" type="submit" value="儲存" (click)="showAlert()" [routerLink]="['/search']" /> -->
+        <input type="submit" value="儲存111" (click)="showAlert()"/>
+        <input id="createInsert" type="submit" value="reset" (click)="reset()"/>
+				<input type="button" value="取消" onclick='history.go(-1)'>
+			</div>
+		</div>
+  </form>
+</div>
+
+
+
+
